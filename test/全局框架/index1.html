@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>全局框架</title>
+</head>
+<body>
+<script>
+    /**
+     * 传入window有两个好处:减少全局作用于链,可以压缩
+     * undefine: 防止内部undefine被修改,有些浏览器下undefine可以赋值
+     */
+    (function(window, undefine) {
+        //这里定义rootjQuery,一个是压缩,一个是更有意义
+        var rootjQuery = jquery(document),
+                readyList,//跟dom加载有关的方法
+
+        location = window.location,
+                document = window.document,
+                docElem = document.documentElement,
+
+                //这两个变量是为了防止冲突
+                _$ = window.$,
+                _jQuery = window.jQuery,
+                //用来类型判断的
+                class2type;
+        function jQuery() {
+            return new jQuery.prototype.init();
+        }
+
+        jQuery.prototype.init();
+        jQuery.prototype.css();
+
+        jQuery().css();
+    })(window);
+</script>
+</body>
+</html>

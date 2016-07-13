@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>全局变量</title>
+</head>
+<body>
+<script>
+    (function (window, undefine) {
+        var jQuery;
+        window.jQuery = window.$ = jQuery;
+    })(window);
+
+
+    //统一管理函数举例  $.Callback();
+    function f1 () {alert(1)};
+    function f2 () {alert(2)};
+    var cb = $.Callbacks();
+
+    cb.add(f1);
+    cb.add(f2);
+
+    cb.fire();
+
+    //对异步进行管理
+    setTimeout(function(){
+        alert(1);
+    }, 1000);
+    alert(2);//2,1
+
+    var deferred = $.Deferred();
+    setTimeout(function () {
+        alert(1);
+        deferred.resolve();
+    }, 1000);
+
+    deferred.done(function () {
+        alert(2);
+    });
+
+    //入队,出队
+    $('#div').animate({left:100});
+    $('#div').animate({top:100});
+    $('#div').animate({top:300});
+</script>
+</body>
+</html>
