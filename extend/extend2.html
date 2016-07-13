@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>循环引用</title>
+    <script src="../jquery-2.0.3.js"></script>
+</head>
+<body>
+<script>
+    var  a ={};
+    var b = $.extend(a, {name : a});
+    console.log(b);//会出现循环引用
+</script>
+</body>
+</html>

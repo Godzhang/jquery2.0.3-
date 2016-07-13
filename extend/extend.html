@@ -2,10 +2,39 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>extend实现方式</title>
+    <title>extend第一种用法——传入一个对象字面量</title>
     <script src="../jquery-2.0.3.js"></script>
 </head>
 <body>
+<script>
+    //当只写一个对象字面量的时候,JQ中扩展插件的形式
+    $.extend({//扩展工具函数方法
+        aaa : function () {
+            alert(1);
+        },
+        bbb : function () {
+            alert(2);
+        }
+    });
 
+    $.fn.extend({//扩展jquery实例方法
+        aaa : function () {
+            alert(3);
+        },
+        bbb : function () {
+            alert(4);
+        }
+    });
+
+    $.aaa();
+    $.bbb();
+
+    $().aaa();
+    $().bbb();
+
+
+    $.extend(); this -> $;  this.aaa -> $.aaa()
+    $.fn.extend(); this -> $.fn;  this.aaa -> $().aaa()
+</script>
 </body>
 </html>

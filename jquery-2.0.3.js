@@ -297,31 +297,32 @@ jQuery.extend = jQuery.fn.extend = function() {
 	}
 
 	// Handle case when target is a string or something (possible in deep copy)
-	if ( typeof target !== "object" && !jQuery.isFunction(target) ) {
+	if ( typeof target !== "object" && !jQuery.isFunction(target) ) {//参数判断,必须是对象
 		target = {};
 	}
 
 	// extend jQuery itself if only one argument is passed
-	if ( length === i ) {
+	if ( length === i ) {//只有一个对象的情况——字面量——用于插件的书写——扩展一些方法
 		target = this;
 		--i;
 	}
 
-	for ( ; i < length; i++ ) {
+	for ( ; i < length; i++ ) {//有多个对象的情况
 		// Only deal with non-null/undefined values
-		if ( (options = arguments[ i ]) != null ) {
+		if ( (options = arguments[ i ]) != null ) {//参数判断
 			// Extend the base object
 			for ( name in options ) {
+                debugger
 				src = target[ name ];
 				copy = options[ name ];
 
 				// Prevent never-ending loop
-				if ( target === copy ) {
+				if ( target === copy ) {//防止循环引用
 					continue;
 				}
 
 				// Recurse if we're merging plain objects or arrays
-				if ( deep && copy && ( jQuery.isPlainObject(copy) || (copyIsArray = jQuery.isArray(copy)) ) ) {
+				if ( deep && copy && ( jQuery.isPlainObject(copy) || (copyIsArray = jQuery.isArray(copy)) ) ) {//深拷贝
 					if ( copyIsArray ) {
 						copyIsArray = false;
 						clone = src && jQuery.isArray(src) ? src : [];
@@ -334,7 +335,7 @@ jQuery.extend = jQuery.fn.extend = function() {
 					target[ name ] = jQuery.extend( deep, clone, copy );
 
 				// Don't bring in undefined values
-				} else if ( copy !== undefined ) {
+				} else if ( copy !== undefined ) {//浅拷贝
 					target[ name ] = copy;
 				}
 			}

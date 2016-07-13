@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>extend传入多个对象字面量</title>
+    <script src="../jquery-2.0.3.js"></script>
+</head>
+<body>
+<script>
+    var a = {};
+    //a继承后面的对象
+    $.extend(a, {name : 'hello'}, {age : 30});
+    console.log(a);
+
+    //还可以作深拷贝和浅拷贝
+    var a = {};
+    var b = {name : 'hello'};
+
+    $.extend(a, b);//这是一个浅拷贝,拷贝只是引用,不是副本
+
+    console.log(a);
+    a.name = 'world';
+    console.log(b);
+
+    $.extend(true, a , b);
+    console.log(a);
+    a.name = 'world';
+    console.log(b);
+</script>
+</body>
+</html>
