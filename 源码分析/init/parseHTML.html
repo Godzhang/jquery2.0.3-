@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>selector选择器解析</title>
+    <script src="../../jquery-2.0.3.js"></script>
+</head>
+<body>
+<ul></ul>
+<script>
+    var str = '<li>1</li><li>2</li><li>3</li>'
+
+    var arr = jQuery.parseHTML(str);//['li','li','li']
+    console.log(arr);
+    $.each(arr, function (i) {
+        $('ul').append(arr[i]);
+    });
+</script>
+</body>
+</html>

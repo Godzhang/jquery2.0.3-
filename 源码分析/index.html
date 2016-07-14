@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../jquery-2.0.3.js"></script>
+</head>
+<body>
+<ul>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+</ul>
+<script>
+    //$('li')返回的是这个对象,即jquery对象,所以才能被css()读取,返回的并不是数组,数组并不能被css()读取到
+    var aLi = $('li');
+    console.log(aLi);
+    aLi[2].style.background = 'red';
+//    console.log(aLi.css('background', 'red'));
+
+//    var li = document.getElementsByTagName('li');
+//    this = {
+//        //内部存的是原生的li
+//        1: 'li',
+//        2: 'li',
+//        3: 'li',
+//        length: 3
+//    };
+//    //里面是原生li,因此我们可以这样操作
+//    $('li').style.background = 'red';
+//
+//    for (var i = 0; i < aLi.length; i++) {
+//        aLi[i].style.background = 'red';
+//    }
+</script>
+</body>
+</html>

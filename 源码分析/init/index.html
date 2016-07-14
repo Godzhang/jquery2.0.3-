@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>init()</title>
+    <script src="../../jquery-2.0.3.js"></script>
+</head>
+<body>
+<script>
+    //源码中有if和else判断
+    if () {//有闭合标签的selector
+        $('<li>') $('<li>2</li>');
+        match = [null, '<li>', null];
+        match = [null, '<li>2</li>', null];
+    } else {//没有闭合标签的selector
+        $('#div') $('.box') $('div')  $('#div div.box')  $('<li>hello')
+        match = null; //$('.box') $('div') $('#div div.box')
+        match = ['#div1', null ,'div1'];  //$('#div')
+        match = ['<li>hello', '<li>', null];  //$('<li>hello')
+    }
+
+    if() {//创建标签和id的selector $('li') $('#div')
+        if () {//$('<li>')
+
+        } else {//$('#div')
+
+        }
+    } else {
+
+    }
+
+    //$('ul li #id') 调用的是find(),find调用sizzle
+</script>
+</body>
+</html>

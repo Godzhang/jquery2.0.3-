@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>数组合并方法和混用</title>
+    <script src="../../jquery-2.0.3.js"></script>
+</head>
+<body>
+<ul></ul>
+<script>
+    //merge()可以合并JSON对象
+    var arr = {
+        0: 'a',
+        1: 'b',
+        length: 2
+    };
+
+    var arr2 = ['c', 'b'];
+
+    console.log($.merge(arr, arr2));
+</script>
+</body>
+</html>

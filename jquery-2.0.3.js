@@ -71,6 +71,7 @@ var
 	// A simple way to check for HTML strings
 	// Prioritize #id over <tag> to avoid XSS via location.hash (#9521)
 	// Strict HTML recognition (#11290: must start with <)
+//两个捕获组,:?不是捕获组,
 	rquickExpr = /^(?:\s*(<[\w\W]+>)[^>]*|#([\w-]*))$/,
 
 	// Match a standalone tag
@@ -119,7 +120,7 @@ jQuery.fn = jQuery.prototype = {
 			if ( match && (match[1] || !context) ) {
 
 				// HANDLE: $(html) -> $(array)
-				if ( match[1] ) {
+				if ( match[1] ) {//创建标签类型的选择器
 					context = context instanceof jQuery ? context[0] : context;
 
 					// scripts is true for back-compat
@@ -146,7 +147,7 @@ jQuery.fn = jQuery.prototype = {
 					return this;
 
 				// HANDLE: $(#id)
-				} else {
+				} else {//创建id类型的选择器
 					elem = document.getElementById( match[2] );
 
 					// Check parentNode to catch when Blackberry 4.6 returns
@@ -180,16 +181,16 @@ jQuery.fn = jQuery.prototype = {
 
 		// HANDLE: $(function)
 		// Shortcut for document ready
-		} else if ( jQuery.isFunction( selector ) ) {
+		} else if ( jQuery.isFunction( selector ) ) {//这里是为什么$(function(){})==$(document).ready(function() {})
 			return rootjQuery.ready( selector );
 		}
 
-		if ( selector.selector !== undefined ) {
+		if ( selector.selector !== undefined ) {//对应$($('#div'))的情况
 			this.selector = selector.selector;
 			this.context = selector.context;
 		}
 
-		return jQuery.makeArray( selector, this );
+		return jQuery.makeArray( selector, this );//类数组转化为数组的方法,$.makeArray()
 	},
 
 	// Start with an empty selector
@@ -297,32 +298,31 @@ jQuery.extend = jQuery.fn.extend = function() {
 	}
 
 	// Handle case when target is a string or something (possible in deep copy)
-	if ( typeof target !== "object" && !jQuery.isFunction(target) ) {//参数判断,必须是对象
+	if ( typeof target !== "object" && !jQuery.isFunction(target) ) {
 		target = {};
 	}
 
 	// extend jQuery itself if only one argument is passed
-	if ( length === i ) {//只有一个对象的情况——字面量——用于插件的书写——扩展一些方法
+	if ( length === i ) {
 		target = this;
 		--i;
 	}
 
-	for ( ; i < length; i++ ) {//有多个对象的情况
+	for ( ; i < length; i++ ) {
 		// Only deal with non-null/undefined values
-		if ( (options = arguments[ i ]) != null ) {//参数判断
+		if ( (options = arguments[ i ]) != null ) {
 			// Extend the base object
 			for ( name in options ) {
-                debugger
 				src = target[ name ];
 				copy = options[ name ];
 
 				// Prevent never-ending loop
-				if ( target === copy ) {//防止循环引用
+				if ( target === copy ) {
 					continue;
 				}
 
 				// Recurse if we're merging plain objects or arrays
-				if ( deep && copy && ( jQuery.isPlainObject(copy) || (copyIsArray = jQuery.isArray(copy)) ) ) {//深拷贝
+				if ( deep && copy && ( jQuery.isPlainObject(copy) || (copyIsArray = jQuery.isArray(copy)) ) ) {
 					if ( copyIsArray ) {
 						copyIsArray = false;
 						clone = src && jQuery.isArray(src) ? src : [];
@@ -332,10 +332,10 @@ jQuery.extend = jQuery.fn.extend = function() {
 					}
 
 					// Never move original objects, clone them
-					target[ name ] = jQuery.extend( deep, clone, copy );
+					target[ name ] = jQuery.extend( deep, clone, copy );//递归调用,对象中有对象的情况
 
 				// Don't bring in undefined values
-				} else if ( copy !== undefined ) {//浅拷贝
+				} else if ( copy !== undefined ) {
 					target[ name ] = copy;
 				}
 			}
@@ -472,6 +472,7 @@ jQuery.extend({
 	// data: string of html
 	// context (optional): If specified, the fragment will be created in this context, defaults to document
 	// keepScripts (optional): If true, will include scripts passed in the html string
+    //把选择器中html标签转化为单个数组,每一个标签一个数组
 	parseHTML: function( data, context, keepScripts ) {
 		if ( !data || typeof data !== "string" ) {
 			return null;

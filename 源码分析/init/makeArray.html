@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>类数组转化为数组的方法</title>
+    <script src="../../jquery-2.0.3.js"></script>
+</head>
+<body>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<script>
+    $(function () {
+        var oDiv = document.getElementsByTagName('div');
+        var arr = $.makeArray(oDiv);
+        arr.push('1');
+        console.log(oDiv);
+        console.log(arr);
+
+        var json = $.makeArray(oDiv, {length: 0});
+        console.log(json);
+    });
+</script>
+</body>
+</html>
