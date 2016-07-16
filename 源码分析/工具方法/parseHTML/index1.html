@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>parseHtml</title>
+    <script src="../../../jquery-2.0.3.js"></script>
+</head>
+<body>
+<script>
+   var str = '<li></li><li></li><script><\/script>';
+
+    console.log($.parseHTML(str, document, true));
+</script>
+</body>
+</html>

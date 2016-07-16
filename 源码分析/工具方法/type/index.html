@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>isPlainObject</title>
+    <script src="../../../jquery-2.0.3.js"></script>
+
+</head>
+<body>
+<script>
+    var a  = {};
+    var b = new Object();
+    console.log($.isPlainObject(a));
+    console.log($.isPlainObject(b));
+
+
+    var c = {};
+    //自身下面要有方法和属性
+    //除了系统自带的方法和属性,如constructor
+    console.log($.isEmptyObject(c));
+
+
+    function A () {
+
+    }
+
+    A.prototype.constructor = function () {};
+    A.prototype.name = 'hello';
+
+    var obj = new A();
+
+    console.log($.isEmptyObject(obj));
+
+
+
+</script>
+</body>
+</html>

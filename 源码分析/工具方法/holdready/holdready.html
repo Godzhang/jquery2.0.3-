@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>holdready</title>
+    <script src="../../jquery-2.0.3.js"></script>
+</head>
+<body>
+<script>
+    $.holdReady(true);//推迟执行
+    $.getScript('a.js', function () {
+        $.holdReady(false);//取消推迟
+    });
+
+    $(function () {
+        alert(2);
+    });
+</script>
+</body>
+</html>

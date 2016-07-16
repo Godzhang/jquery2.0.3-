@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>reay中得返回值</title>
+    <script src="../../jquery-2.0.3.js"></script>
+</head>
+<body>
+<script>
+    //这个是通过异步promise调用
+//    $(function () {
+//        console.log(this);
+//    });
+//
+//    $(function (arg) {
+//        console.log(arg);
+//    });
+//这个是自动触发函数调用trigger
+    $(document).on('ready', function () {
+        alert(1)
+    });
+</script>
+</body>
+</html>

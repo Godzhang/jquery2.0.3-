@@ -40,6 +40,7 @@ var
 	_$ = window.$,
 
 	// [[Class]] -> type pairs
+    //下面对class2type进行赋值
 	class2type = {},
 
 	// List of deleted data cache ids, so we can reuse them
@@ -239,6 +240,7 @@ jQuery.fn = jQuery.prototype = {
 
 	ready: function( fn ) {
 		// Add the callback
+        //延迟对象
 		jQuery.ready.promise().done( fn );
 
 		return this;
@@ -370,6 +372,7 @@ jQuery.extend({
 	readyWait: 1,
 
 	// Hold (or release) the ready event
+    //推迟dom触发,参数为布尔值
 	holdReady: function( hold ) {
 		if ( hold ) {
 			jQuery.readyWait++;
@@ -398,6 +401,7 @@ jQuery.extend({
 		readyList.resolveWith( document, [ jQuery ] );
 
 		// Trigger any bound ready events
+        //主动触发事件,用于$(document).on('ready', function () {})
 		if ( jQuery.fn.trigger ) {
 			jQuery( document ).trigger("ready").off("ready");
 		}
@@ -416,21 +420,21 @@ jQuery.extend({
 		return obj != null && obj === obj.window;
 	},
 
-	isNumeric: function( obj ) {
+	isNumeric: function( obj ) {//判断是否为数字类型
 		return !isNaN( parseFloat(obj) ) && isFinite( obj );
 	},
 
 	type: function( obj ) {
-		if ( obj == null ) {
+		if ( obj == null ) {//判断null和undefine
 			return String( obj );
 		}
 		// Support: Safari <= 5.1 (functionish RegExp)
-		return typeof obj === "object" || typeof obj === "function" ?
+		return typeof obj === "object" || typeof obj === "function" ?//函数或者引用类型
 			class2type[ core_toString.call(obj) ] || "object" :
-			typeof obj;
+			typeof obj;//基本类型
 	},
 
-	isPlainObject: function( obj ) {
+	isPlainObject: function( obj ) {//判断是否为对象
 		// Not plain objects:
 		// - Any object or value whose internal [[Class]] property is not "[object Object]"
 		// - DOM nodes
@@ -457,15 +461,15 @@ jQuery.extend({
 		return true;
 	},
 
-	isEmptyObject: function( obj ) {
+	isEmptyObject: function( obj ) {//是否为空对象,没有自身下的属性和方法,就返回true
 		var name;
-		for ( name in obj ) {
+		for ( name in obj ) {//for in 循环非系统自带的
 			return false;
 		}
 		return true;
 	},
 
-	error: function( msg ) {
+	error: function( msg ) {//报错,为了自己查看代码
 		throw new Error( msg );
 	},
 
@@ -487,11 +491,11 @@ jQuery.extend({
 			scripts = !keepScripts && [];
 
 		// Single tag
-		if ( parsed ) {
+		if ( parsed ) {//单标签<li></li>
 			return [ context.createElement( parsed[1] ) ];
 		}
-
-		parsed = jQuery.buildFragment( [ data ], context, scripts );
+        //多标签<li></li><script></script>
+		parsed = jQuery.buildFragment( [ data ], context, scripts );//节点碎片,创建DOM
 
 		if ( scripts ) {
 			jQuery( scripts ).remove();
