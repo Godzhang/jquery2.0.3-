@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>ach</title>
+    <script src="../../jquery-2.0.3.js"></script>
+</head>
+<body>
+<script>
+    //可以循环数组,类数组(jq对象),json对象
+//    var arr = ['a', 'b', 'c'];
+//
+//    $.each(arr, function (i, item) {
+//        alert(i + item);
+//    });
+
+
+    var json = {
+        name: 'hello',
+        age: 1
+    }
+
+    $.each(json, function (i,value) {
+        alert(value);
+    });
+</script>
+</body>
+</html>

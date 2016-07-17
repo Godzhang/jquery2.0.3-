@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>deferred</title>
+    <script src="../../jquery-2.0.3.js"></script>
+</head>
+<body>
+<input type="button" value="点击"/>
+<script>
+    //整体架构
+//    jQuery.extend({
+//        Deferred : function () {
+//
+//        },
+//        when : function () {
+//
+//        }
+//    });
+//
+//    $.Deferred();  -> $.Callbacks();
+//    $.when();
+
+//回顾Callback()
+//    var cb = $.Callbacks();
+//
+//    setTimeout(function () {
+//        alert(111);
+//        cb.fire();
+//    }, 1000);
+//
+//    cb.add(function () {
+//        alert(222);
+//    });
+
+    //完成的回调函数
+//    var dfd = $.Deferred();
+//    setTimeout(function () {
+//        alert(111);
+//        dfd.resolve();//完成的状态
+//    }, 1000);
+//
+//    dfd.done(function () {//成功的回调函数
+//        alert(222);
+//    });
+
+    //失败的时候触发
+//    var dfd = $.Deferred();
+//    setTimeout(function () {
+//        alert(111);
+//        dfd.reject();//失败的状态
+//    }, 1000);
+//
+//    dfd.fail(function () {//失败的回调函数
+//        alert(222);
+//    });
+
+    //进行时候触发
+//    var dfd = $.Deferred();
+//    setTimeout(function () {
+//        alert(111);
+//        dfd.notify();//进行时的状态
+//    }, 1000);
+//
+//    dfd.progress(function () {//进行时的回调函数
+//        alert(222);
+//    });
+
+
+    //进行中不限制触发次数,成功和失败只触发1次
+//    var dfd = $.Deferred();
+//    setInterval(function () {
+//        alert(111);
+//        dfd.resolve();//成功
+////        dfd.reject();//失败
+////        dfd.notify();//进行时的状态
+//    }, 1000);
+//
+//    dfd.done(function () {
+//        alert('成功');
+//    }).progress(function () {//添加进行时的回调函数
+//        alert('进行中');
+//    }).fail(function () {
+//        alert('失败');
+//    });
+
+    //进行中不限制触发次数,成功和失败只触发1次
+//    var dfd = $.Deferred();
+//    setInterval(function () {
+//        alert(111);
+//        dfd.resolve();//成功
+////        dfd.reject();//失败
+////        dfd.notify();//进行时的状态
+//    }, 1000);
+//
+//    dfd.done(function () {
+//        alert('成功');
+//    }).progress(function () {//添加进行时的回调函数
+//        alert('进行中');
+//    }).fail(function () {
+//        alert('失败');
+//    });
+
+
+    //这一点非常重要——用在刚开始不想触发,后来某时刻想触发
+    //源码中加memory的目的是,加入的回调函数会立即触发
+//    var dfd = $.Deferred();
+//    setTimeout(function () {
+//        alert(111);
+//        dfd.resolve();//成功
+//    }, 1000);
+//
+//    dfd.done(function () {
+//        alert('成功1');
+//    });
+//
+//    $('input').click(function () {
+//        dfd.done(function () {
+//            alert('点击');
+//        });
+//    });
+
+
+    //then的用法
+    var dfd = $.Deferred();
+    setTimeout(function () {
+        dfd.resolve();//成功
+    }, 1000);
+
+    dfd.then(function () {
+        alert('成功');
+    });
+
+</script>
+</body>
+</html>

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>makeArray</title>
+    <script src="../../jquery-2.0.3.js"></script>
+</head>
+<body>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<div></div>
+<script>
+    //把字符串,数字,类数组,json转化为数组
+    var a = $('div');
+    console.log(a);
+    console.log($.makeArray(a));
+
+    var str = 'hello';
+    console.log($.makeArray(str));
+</script>
+</body>
+</html>

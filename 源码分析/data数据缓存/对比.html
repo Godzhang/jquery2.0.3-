@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>对比</title>
+    <script src="../../jquery-2.0.3.js"></script>
+</head>
+<body>
+<div id="div"></div>
+<script>
+    $(function () {
+//        $('#div').attr('name', 'hello');
+//        console.log($('#div').attr('name'));
+        //原生实现
+//        document.getElementById('div').setAttribute('name', 'hello');
+//        document.getElementById('div').getAttribute('name', 'hello');
+
+
+//        $('#div').prop('name', 'hello');
+//        console.log($('#div').prop('name'));
+        //原生实现
+//        document.getElementById('div')['name'] = 'hello';
+//        document.getElementById('div').name;
+
+
+
+        //以上两种方式,不适合设置大量数据,适合设置属性相关的属性
+        //大的数据用data()方法
+        //js中dom元素与对象之间互相引用会出现内存泄露,用data()可以解决
+
+        var oDiv = document.getElementById('div1');
+        var obj = {};
+
+        oDiv.name = obj;
+        oDiv.age = oDiv;
+
+        $('#div').attr('name', obj);//这里dom元素与js对象互相引用,导致内存泄露
+        $('#div').data('name', obj);//这里不会出现内存泄露
+
+    });
+</script>
+</body>
+</html>

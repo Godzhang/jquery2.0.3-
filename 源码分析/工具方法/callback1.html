@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>callback</title>
+    <script src="../../jquery-2.0.3.js"></script>
+</head>
+<body>
+<script>
+    //Callbacks(option)
+    //option有四个值
+    //once 只能fire一次
+    //memory 记忆功能,把所有都触发,无论fire在哪里执行
+    //unique 去除同样的函数
+    //stopOnFalse 执行到有回调返回false
+    function aaa() {
+        console.log('aaa');
+    }
+    function bbb() {
+        console.log('bbb');
+    }
+
+    //    var cb = $.Callbacks('once');
+    //
+    //    cb.add(aaa);
+    //    cb.add(bbb);
+    //
+    //    cb.fire();
+    //    cb.fire();
+
+    //    var cb = $.Callbacks('memory');
+    //
+    //    cb.add(aaa);
+    //    cb.fire();
+    //    cb.add(bbb);
+
+    //    var cb = $.Callbacks('unique');
+    //
+    //    cb.add(aaa);
+    //    cb.add(aaa);
+    //
+    //    cb.fire();
+    //还可以有组合的方式,通过空格分隔
+    var cb = $.Callbacks('unique once');
+
+    cb.add(aaa);
+    cb.add(aaa);
+
+    cb.fire();
+</script>
+</body>
+</html>

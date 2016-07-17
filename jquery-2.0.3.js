@@ -305,6 +305,7 @@ jQuery.extend = jQuery.fn.extend = function() {
 	}
 
 	// extend jQuery itself if only one argument is passed
+    //如果只有一个参数,则就是为jquery本身扩展
 	if ( length === i ) {
 		target = this;
 		--i;
@@ -504,7 +505,7 @@ jQuery.extend({
 		return jQuery.merge( [], parsed.childNodes );
 	},
 
-	parseJSON: JSON.parse,
+	parseJSON: JSON.parse,//解析为JSONS对象
 
 	// Cross-browser xml parsing
 	parseXML: function( data ) {
@@ -527,7 +528,7 @@ jQuery.extend({
 		return xml;
 	},
 
-	noop: function() {},
+	noop: function() {},//容错函数
 
 	// Evaluates a script in a global context
 	globalEval: function( code ) {
@@ -540,7 +541,7 @@ jQuery.extend({
 			// If the code includes a valid, prologue position
 			// strict mode pragma, execute code by injecting a
 			// script tag into the document.
-			if ( code.indexOf("use strict") === 1 ) {
+			if ( code.indexOf("use strict") === 1 ) {//严格模式下不支持eval()解析
 				script = document.createElement("script");
 				script.text = code;
 				document.head.appendChild( script ).parentNode.removeChild( script );
@@ -554,20 +555,22 @@ jQuery.extend({
 
 	// Convert dashed to camelCase; used by the css and data modules
 	// Microsoft forgot to hump their vendor prefix (#9572)
+    //驼峰命名转化
 	camelCase: function( string ) {
 		return string.replace( rmsPrefix, "ms-" ).replace( rdashAlpha, fcamelCase );
 	},
-
+    //是否为指定节点名,返回布尔值
 	nodeName: function( elem, name ) {
 		return elem.nodeName && elem.nodeName.toLowerCase() === name.toLowerCase();
 	},
 
 	// args is for internal usage only
+    //兼容jquery对象的遍历。是加强版——数组,类数组,json集合
 	each: function( obj, callback, args ) {
 		var value,
 			i = 0,
 			length = obj.length,
-			isArray = isArraylike( obj );
+			isArray = isArraylike( obj );//判断是否是数组,类数组和this,this是带下标的对象
 
 		if ( args ) {
 			if ( isArray ) {
@@ -612,16 +615,17 @@ jQuery.extend({
 		return obj;
 	},
 
-	trim: function( text ) {
+	trim: function( text ) {//IE低版本不兼容原生的
 		return text == null ? "" : core_trim.call( text );
 	},
 
 	// results is for internal usage only
-	makeArray: function( arr, results ) {
+    //把类数组,json,数字,字符串转为数组
+	makeArray: function( arr, results ) {//第二个参数仅供内部使用
 		var ret = results || [];
 
 		if ( arr != null ) {
-			if ( isArraylike( Object(arr) ) ) {
+			if ( isArraylike( Object(arr) ) ) {//是否为类数组
 				jQuery.merge( ret,
 					typeof arr === "string" ?
 					[ arr ] : arr
@@ -633,11 +637,11 @@ jQuery.extend({
 
 		return ret;
 	},
-
-	inArray: function( elem, arr, i ) {
+    //数组版indexof
+	inArray: function( elem, arr, i ) {//i代表从i的位置查起
 		return arr == null ? -1 : core_indexOf.call( arr, elem, i );
 	},
-
+    //合并数组(对外),json对象(内部)
 	merge: function( first, second ) {
 		var l = second.length,
 			i = first.length,
@@ -647,18 +651,18 @@ jQuery.extend({
 			for ( ; j < l; j++ ) {
 				first[ i++ ] = second[ j ];
 			}
-		} else {
+		} else {//类数组,json形式
 			while ( second[j] !== undefined ) {
 				first[ i++ ] = second[ j++ ];
 			}
 		}
 
-		first.length = i;
+		first.length = i;//这个地方是关键,手动改变长度
 
-		return first;
+		return first;//返回的是一个新数组,也是第一个数组
 	},
-
-	grep: function( elems, callback, inv ) {
+    //过滤新数组
+	grep: function( elems, callback, inv ) {//同ES5中filter()方法
 		var retVal,
 			ret = [],
 			i = 0,
@@ -678,7 +682,8 @@ jQuery.extend({
 	},
 
 	// arg is for internal usage only
-	map: function( elems, callback, arg ) {
+    //数组的映射
+	map: function( elems, callback, arg ) {//通过规则得到一个新数组
 		var value,
 			i = 0,
 			length = elems.length,
@@ -707,14 +712,16 @@ jQuery.extend({
 		}
 
 		// Flatten any nested arrays
-		return core_concat.apply( [], ret );
+		return core_concat.apply( [], ret );//避免复合数组[[],[],[]……]
 	},
 
 	// A global GUID counter for objects
+    //内部唯一标示符——事件关联
 	guid: 1,
 
 	// Bind a function to a context, optionally partially applying any
 	// arguments.
+    //改变上下文执行环境,this指向
 	proxy: function( fn, context ) {
 		var tmp, args, proxy;
 
@@ -739,11 +746,12 @@ jQuery.extend({
 		// Set the guid of unique handler to the same of original handler, so it can be removed
 		proxy.guid = fn.guid = fn.guid || jQuery.guid++;
 
-		return proxy;
+		return proxy;//返回的是一个函数
 	},
 
 	// Multifunctional method to get and set values of a collection
 	// The value/s can optionally be executed if it's a function
+    //强大的内部方法:可以获取/设置值,也可以用{}一次设置多个值,$().css({width:'100',height:'200'})
 	access: function( elems, fn, key, value, chainable, emptyGet, raw ) {
 		var i = 0,
 			length = elems.length,
@@ -751,7 +759,7 @@ jQuery.extend({
 
 		// Sets many values
 		if ( jQuery.type( key ) === "object" ) {
-			chainable = true;
+			chainable = true;//设置值,当为false时,读取值
 			for ( i in key ) {
 				jQuery.access( elems, fn, i, key[i], true, emptyGet, raw );
 			}
@@ -785,14 +793,14 @@ jQuery.extend({
 				}
 			}
 		}
-
+        //这里是获取值
 		return chainable ?
 			elems :
 
 			// Gets
 			bulk ?
 				fn.call( elems ) :
-				length ? fn( elems[0], key ) : emptyGet;
+				length ? fn( elems[0], key ) : emptyGet;//返回第一个值得属性值
 	},
 
 	now: Date.now,
@@ -800,7 +808,7 @@ jQuery.extend({
 	// A method for quickly swapping in/out CSS properties to get correct calculations.
 	// Note: this method belongs to the css module but it's needed here for the support module.
 	// If support gets modularized, this method should be moved back to the css module.
-	swap: function( elem, options, callback, args ) {
+	swap: function( elem, options, callback, args ) {//css属性交换,但是效果不变,内部
 		var ret, name,
 			old = {};
 
@@ -821,7 +829,7 @@ jQuery.extend({
 	}
 });
 
-jQuery.ready.promise = function( obj ) {
+jQuery.ready.promise = function( obj ) {//检测dom异步操作
 	if ( !readyList ) {
 
 		readyList = jQuery.Deferred();
@@ -850,7 +858,7 @@ jQuery.each("Boolean Number String Function Array Date RegExp Object Error".spli
 	class2type[ "[object " + name + "]" ] = name.toLowerCase();
 });
 
-function isArraylike( obj ) {
+function isArraylike( obj ) {//判断数组,类数组,或者jq对象特殊json
 	var length = obj.length,
 		type = jQuery.type( obj );
 
@@ -858,7 +866,7 @@ function isArraylike( obj ) {
 		return false;
 	}
 
-	if ( obj.nodeType === 1 && length ) {
+	if ( obj.nodeType === 1 && length ) {//元素节点
 		return true;
 	}
 
@@ -2882,6 +2890,7 @@ function createOptions( options ) {
  *	stopOnFalse:	interrupt callings when a callback returns false
  *
  */
+    //回调对象,对函数统一管理
 jQuery.Callbacks = function( options ) {
 
 	// Convert options from String-formatted to Object-formatted if needed
@@ -2936,12 +2945,12 @@ jQuery.Callbacks = function( options ) {
 		// Actual Callbacks object
 		self = {
 			// Add a callback or a collection of callbacks to the list
-			add: function() {
+			add: function() {//添加回调函数到list数组中
 				if ( list ) {
 					// First, we save the current length
 					var start = list.length;
 					(function add( args ) {
-						jQuery.each( args, function( _, arg ) {
+						jQuery.each( args, function( _, arg ) {//可以一下传多个回调
 							var type = jQuery.type( arg );
 							if ( type === "function" ) {
 								if ( !options.unique || !self.has( arg ) ) {
@@ -2961,7 +2970,7 @@ jQuery.Callbacks = function( options ) {
 					// we should call right away
 					} else if ( memory ) {
 						firingStart = start;
-						fire( memory );
+						fire( memory );//当callbacks()中有memory时,add()会自动触发fire
 					}
 				}
 				return this;
@@ -2993,13 +3002,13 @@ jQuery.Callbacks = function( options ) {
 				return fn ? jQuery.inArray( fn, list ) > -1 : !!( list && list.length );
 			},
 			// Remove all callbacks from the list
-			empty: function() {
+			empty: function() {//清空整个数组
 				list = [];
 				firingLength = 0;
 				return this;
 			},
 			// Have the list do nothing anymore
-			disable: function() {
+			disable: function() {//全部锁定
 				list = stack = memory = undefined;
 				return this;
 			},
@@ -3033,7 +3042,7 @@ jQuery.Callbacks = function( options ) {
 				return this;
 			},
 			// Call all the callbacks with the given arguments
-			fire: function() {
+			fire: function() {//fire回调函数一起执行
 				self.fireWith( this, arguments );
 				return this;
 			},
@@ -3048,8 +3057,10 @@ jQuery.Callbacks = function( options ) {
 jQuery.extend({
 
 	Deferred: function( func ) {
+        //这是一个映射数组
 		var tuples = [
 				// action, add listener, listener list, final state
+                //resolve,reject,notify用于相应状态的触发(fire),done,fail,progress用于添加相应的回调(add)
 				[ "resolve", "done", jQuery.Callbacks("once memory"), "resolved" ],
 				[ "reject", "fail", jQuery.Callbacks("once memory"), "rejected" ],
 				[ "notify", "progress", jQuery.Callbacks("memory") ]
@@ -3059,10 +3070,12 @@ jQuery.extend({
 				state: function() {
 					return state;
 				},
+                //加入任何状态的回调函数
 				always: function() {
 					deferred.done( arguments ).fail( arguments );
 					return this;
 				},
+                //
 				then: function( /* fnDone, fnFail, fnProgress */ ) {
 					var fns = arguments;
 					return jQuery.Deferred(function( newDefer ) {
@@ -3077,7 +3090,7 @@ jQuery.extend({
 										.done( newDefer.resolve )
 										.fail( newDefer.reject )
 										.progress( newDefer.notify );
-								} else {
+								} else {//不传参的情况
 									newDefer[ action + "With" ]( this === promise ? newDefer.promise() : this, fn ? [ returned ] : arguments );
 								}
 							});
@@ -3087,6 +3100,7 @@ jQuery.extend({
 				},
 				// Get a promise for this deferred
 				// If obj is provided, the promise aspect is added to the object
+                //当有参数的时候,这里把promise对象的方法,继承给了deferred对象,没有参数直接返回promise
 				promise: function( obj ) {
 					return obj != null ? jQuery.extend( obj, promise ) : promise;
 				}
@@ -3102,6 +3116,7 @@ jQuery.extend({
 				stateString = tuple[ 3 ];
 
 			// promise[ done | fail | progress ] = list.add
+            //回调方法添加到promise对象下面
 			promise[ tuple[1] ] = list.add;
 
 			// Handle state
@@ -3115,6 +3130,7 @@ jQuery.extend({
 			}
 
 			// deferred[ resolve | reject | notify ]
+            //状态方法添加到promise对象下面
 			deferred[ tuple[0] ] = function() {
 				deferred[ tuple[0] + "With" ]( this === deferred ? promise : this, arguments );
 				return this;
@@ -3126,7 +3142,7 @@ jQuery.extend({
 		promise.promise( deferred );
 
 		// Call given func if any
-		if ( func ) {
+		if ( func ) {//如果有参数,直接让参数立即执行
 			func.call( deferred, deferred );
 		}
 
@@ -3135,12 +3151,15 @@ jQuery.extend({
 	},
 
 	// Deferred helper
+    //deferred的辅助方法,可以添加多个延迟对象
+    //参数都必须是延迟对象
 	when: function( subordinate /* , ..., subordinateN */ ) {
 		var i = 0,
 			resolveValues = core_slice.call( arguments ),
 			length = resolveValues.length,
 
 			// the count of uncompleted subordinates
+            //deferred计数器
 			remaining = length !== 1 || ( subordinate && jQuery.isFunction( subordinate.promise ) ) ? length : 0,
 
 			// the master Deferred. If resolveValues consist of only a single Deferred, just use that.
@@ -3194,6 +3213,7 @@ jQuery.support = (function( support ) {
 		opt = select.appendChild( document.createElement("option") );
 
 	// Finish early in limited environments
+    //这个无意义
 	if ( !input.type ) {
 		return support;
 	}
@@ -3276,7 +3296,7 @@ jQuery.support = (function( support ) {
 		});
 
 		// Use window.getComputedStyle because jsdom on node.js will break without it.
-		if ( window.getComputedStyle ) {
+		if ( window.getComputedStyle ) {//node中没有这个属性
 			support.pixelPosition = ( window.getComputedStyle( div, null ) || {} ).top !== "1%";
 			support.boxSizingReliable = ( window.getComputedStyle( div, null ) || { width: "4px" } ).width === "4px";
 

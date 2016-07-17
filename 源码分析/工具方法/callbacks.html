@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>callback</title>
+    <script src="../../jquery-2.0.3.js"></script>
+</head>
+<body>
+<script>
+    //Callbacks()对回调进行统一管理
+    function aaa() {
+        console.log('aaa');
+    }
+    function bbb() {
+        console.log('bbb');
+    }
+    function ccc() {
+        console.log('ccc');
+    }
+
+    var cb = $.Callbacks();
+
+    cb.add(aaa);
+    cb.add(bbb);
+    cb.add(ccc);
+    //观察者模式
+    cb.fire();
+
+
+    //这种模式同上
+    document.addEventListener('click', function () {}, false);
+    document.addEventListener('click', function () {}, false);
+    document.addEventListener('click', function () {}, false);
+
+</script>
+</body>
+</html>
