@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>dom操作</title>
+    <script src="../../jquery-2.0.3.js"></script>
+</head>
+<body class="hello">
+<div class="test">11</div>
+<div>22</div>
+
+<div>
+    <span class="aaa">span 11</span>
+    <p>p</p>
+    <span>span 22</span>
+</div>
+<script>
+    $(function () {
+//        $('span').parent().css('border', '1px solid red');
+//        //还可以加参数,限定父元素
+//        $('span').parent('div').css('border', '1px solid red');
+//
+//        //parents()筛选出所有的父元素
+//        $('span').parents().css('border', '1px solid red');
+//        //同上,加参数,限定父元素
+//        $('span').parents('body').css('border', '1px solid red');
+        //选取兄弟节点,不包括自己
+//        $('.aaa').siblings().css('background', 'red');
+
+
+        //寻找所有的子节点
+//        $('.hello').children().css('background', 'blue');
+
+
+//原生childNod会获取所有的节点,包括注释,文本等,ele.contentDocument是iframe中的document
+        //就是childNodes的实现
+//        $('.hello').contents().css('background', 'blue');
+
+
+//        $('.test').click(function (e) {
+//            alert(1);
+//        });
+//        //元素删除操作,返回删除的元素
+//        //删除彻底,包括事件,子元素
+//        var $del = $('.test').detach();
+//        //与remove的区别是,删除元素,不删除事件,删除不彻底
+////        var $del = $('.df').detach();
+//        $('body').append($del);
+
+        //把div内部全部清空,包括事件和缓存
+//        $('div').empty();
+        //把div中所有的文本,包括div中的文本节点
+//        console.log($('div').text());
+        //这里并不会解析html
+//        $('div').text('<h1>hello</h1>');
+
+
+//        //clone()是完全复制,不动原来的dom
+//        $('.test').click(function (e) {
+//            alert(1);
+//        });
+//        //无参数不带缓存数据和事件
+//        var cloneDiv = $('.test').clone();
+//        //clone加参数带有缓存数据是事件
+//        //这里隐藏了一个参数clone(true)==clone(true, true),第一个是本元素是否克隆事件,第二个是子元素事件
+//        var cloneDiv = $('.test').clone(true);
+//        $('body').append(cloneDiv);
+
+
+        //html()添加html元素,script也可以执行,html中必须是字符串
+//        $('div').html('<script>alert(1)<\/script>');
+        //原生的html不能解析script
+//        $('div').get(0).innerHTML = '<script>alert(1)<\/script>';
+//        $('.test').html('<div/>');
+
+        //本元素的前面,
+//       $('.test').before($('span'));
+        //原生实现
+        var createEle = document.createElement('span');
+        $('.test').get(0).parentNode.insertBefore(createEle, $('.test').get(0).parentNode.firstChild);
+
+
+    });
+</script>
+</body>
+</html>

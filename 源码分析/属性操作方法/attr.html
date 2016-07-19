@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>attr的作用</title>
+    <script src="../../jquery-2.0.3.js"></script>
+</head>
+<body>
+<div class="test">11</div>
+<script>
+//    //这个会自动调用prop(),因为html,不支持设置属性getAttribute()
+//    $(document).attr('title', 'hello');
+//
+//    $().removeAttr('helo me sj');//可以递归删除
+//
+//    $().removeAttr('class');//会自动转化为className
+
+    $('.test').attr('class', 'div hello');//class存在的情况下会覆盖
+</script>
+</body>
+</html>

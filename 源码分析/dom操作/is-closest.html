@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jquery的筛选</title>
+    <script src="../../jquery-2.0.3.js"></script>
+</head>
+<body class="hello">
+<div class="df">11</div>
+<div class="test">11</div>
+<div><span>span</span></div>
+<script>
+    $(function () {
+//        //is返回布尔值,当前元素中是否存在对应筛选
+//        alert($('div').is('.test'));
+//
+//        //索引值是兄弟节点的值
+//        alert($('.test').index());
+//        //有参数的index()是在参数中的索引
+//        alert($('.test').index('div'));
+//        //这种写法同上
+//        alert($('div').index('.test'));
+
+
+        //找到祖先节点中最近的目标节点为止
+       $('div').closest('.hello').css('border', '1px solid red');
+        //closest可有两个参数,第二个参数限定范围,必须是原生节点
+        $('div').closest('.hello', $('body').get(0)).css('border', '1px solid red');
+
+        //添加元素到前面的集合
+        $('div').add('span').css('border', '1px solid red');
+        //addBack()返回到$(div),但是包括find()中的元素,不同于end(),end()不包含find中的元素
+        $('div').find().css().addBack().css('border', '1px solid red');
+
+    });
+</script>
+</body>
+</html>

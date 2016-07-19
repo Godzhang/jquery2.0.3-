@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>addClass可以传入回调函数</title>
+    <script src="../../jquery-2.0.3.js"></script>
+</head>
+<body>
+<div class="test">11</div>
+<script>
+//    $('div').addClass(function (index) {//回调函数返回值作为class
+//        return 'hello' + index;
+//    });
+
+    $('div').addClass('hello');
+
+    //&&操作符优先级大于|| 0 || 1 && 2
+</script>
+</body>
+</html>

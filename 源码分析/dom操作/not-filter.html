@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>jquery的筛选</title>
+    <script src="../../jquery-2.0.3.js"></script>
+</head>
+<body>
+<div class="test">11</div>
+<div><span>span</span></div>
+<script>
+    $(function () {
+        //过滤元素:检测自身有没有,与has的区别
+       // $('div').filter('.test').css('border', '1px solid red');
+        //not是选择自身没有的
+        //$('div').not('.test').css('border', '1px solid red');
+        //has检测内部有没有
+        $('div').has('span').css('border', '1px solid red');
+
+        //filter和not可以传入函数
+    });
+</script>
+</body>
+</html>

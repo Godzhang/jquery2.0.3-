@@ -383,7 +383,7 @@ jQuery.extend({
 	},
 
 	// Handle when the DOM is ready
-	ready: function( wait ) {
+	ready: function( wait ) {//wait与holdReady有关
 
 		// Abort if there are pending holds or we're already ready
 		if ( wait === true ? --jQuery.readyWait : jQuery.isReady ) {
@@ -399,6 +399,7 @@ jQuery.extend({
 		}
 
 		// If there are functions bound, to execute
+        //立即触发延迟函数,reaolvewith()可以进行传参
 		readyList.resolveWith( document, [ jQuery ] );
 
 		// Trigger any bound ready events
@@ -746,7 +747,7 @@ jQuery.extend({
 		// Set the guid of unique handler to the same of original handler, so it can be removed
 		proxy.guid = fn.guid = fn.guid || jQuery.guid++;
 
-		return proxy;//返回的是一个函数
+		return proxy;
 	},
 
 	// Multifunctional method to get and set values of a collection
@@ -837,12 +838,16 @@ jQuery.ready.promise = function( obj ) {//检测dom异步操作
 		// Catch cases where $(document).ready() is called after the browser event has already occurred.
 		// we once tried to use readyState "interactive" here, but it caused issues like the one
 		// discovered by ChrisS here: http://bugs.jquery.com/ticket/12282#comment:15
-		if ( document.readyState === "complete" ) {
+		if ( document.readyState === "complete" ) {//complete状态引发load事件
 			// Handle it asynchronously to allow scripts the opportunity to delay ready
-			setTimeout( jQuery.ready );
+			setTimeout( jQuery.ready );//加定时器原因:在IE下表现没有问题
 
 		} else {
-
+            //这里触发两个状态原因
+            //两个事件触发先不确定
+            //正常情况load在DOMContentLoad之后
+            //但是有缓存的情况下,load在DOMContentLoad之前
+            //最终的目的是触发最先触发的回调
 			// Use the handy event callback
 			document.addEventListener( "DOMContentLoaded", completed, false );
 
@@ -3696,7 +3701,7 @@ jQuery.extend({
 	},
 
 	dequeue: function( elem, type ) {
-		type = type || "fx";
+		type = type || "fx";//类型默认为fx
 
 		var queue = jQuery.queue( elem, type ),
 			startLength = queue.length,
@@ -3775,6 +3780,7 @@ jQuery.fn.extend({
 	},
 	// Based off of the plugin by Clint Helfers, with permission.
 	// http://blindsignals.com/index.php/2009/07/jquery-delay/
+    //延迟队列
 	delay: function( time, type ) {
 		time = jQuery.fx ? jQuery.fx.speeds[ time ] || time : time;
 		type = type || "fx";
@@ -3791,6 +3797,7 @@ jQuery.fn.extend({
 	},
 	// Get a promise resolved when queues of a certain type
 	// are emptied (fx is the type by default)
+    //所有的队列执行完毕之后调用
 	promise: function( type, obj ) {
 		var tmp,
 			count = 1,
@@ -3954,7 +3961,7 @@ jQuery.fn.extend({
 				}
 
 			// Toggle whole class name
-			} else if ( type === core_strundefined || type === "boolean" ) {
+			} else if ( type === core_strundefined || type === "boolean" ) {//booblen值整体删减
 				if ( this.className ) {
 					// store className if set
 					data_priv.set( this, "__className__", this.className );
@@ -4122,7 +4129,7 @@ jQuery.extend({
 		}
 
 		// Fallback to prop when attributes are not supported
-		if ( typeof elem.getAttribute === core_strundefined ) {
+		if ( typeof elem.getAttribute === core_strundefined ) {//getAttributes不支持
 			return jQuery.prop( elem, name, value );
 		}
 
@@ -4131,7 +4138,7 @@ jQuery.extend({
 		if ( nType !== 1 || !jQuery.isXMLDoc( elem ) ) {
 			name = name.toLowerCase();
 			hooks = jQuery.attrHooks[ name ] ||
-				( jQuery.expr.match.bool.test( name ) ? boolHook : nodeHook );
+				( jQuery.expr.match.bool.test( name ) ? boolHook : nodeHook );//可以传boolen
 		}
 
 		if ( value !== undefined ) {
@@ -4143,7 +4150,7 @@ jQuery.extend({
 				return ret;
 
 			} else {
-				elem.setAttribute( name, value + "" );
+				elem.setAttribute( name, value + "" );//值必须是字符串
 				return value;
 			}
 
@@ -4151,7 +4158,7 @@ jQuery.extend({
 			return ret;
 
 		} else {
-			ret = jQuery.find.attr( elem, name );
+			ret = jQuery.find.attr( elem, name );//sizzle中获取attribute方法
 
 			// Non-existent attributes return null, we normalize to undefined
 			return ret == null ?
@@ -4222,17 +4229,17 @@ jQuery.extend({
 		if ( value !== undefined ) {
 			return hooks && "set" in hooks && (ret = hooks.set( elem, value, name )) !== undefined ?
 				ret :
-				( elem[ name ] = value );
+				( elem[ name ] = value );//设置操作
 
 		} else {
 			return hooks && "get" in hooks && (ret = hooks.get( elem, name )) !== null ?
 				ret :
-				elem[ name ];
+				elem[ name ];//获取操作
 		}
 	},
 
 	propHooks: {
-		tabIndex: {
+		tabIndex: {//一个焦点顺序的属性
 			get: function( elem ) {
 				return elem.hasAttribute( "tabindex" ) || rfocusable.test( elem.nodeName ) || elem.href ?
 					elem.tabIndex :
@@ -5161,7 +5168,7 @@ var isSimple = /^.[^:#\[\.,]*$/,
 		next: true,
 		prev: true
 	};
-
+//jquery的遍历筛选方法
 jQuery.fn.extend({
 	find: function( selector ) {
 		var i,
@@ -5169,7 +5176,7 @@ jQuery.fn.extend({
 			self = this,
 			len = self.length;
 
-		if ( typeof selector !== "string" ) {
+		if ( typeof selector !== "string" ) {//字符串的情况
 			return this.pushStack( jQuery( selector ).filter(function() {
 				for ( i = 0; i < len; i++ ) {
 					if ( jQuery.contains( self[ i ], this ) ) {
@@ -5179,12 +5186,12 @@ jQuery.fn.extend({
 			}) );
 		}
 
-		for ( i = 0; i < len; i++ ) {
+		for ( i = 0; i < len; i++ ) {//dom节点的情况
 			jQuery.find( selector, self[ i ], ret );
 		}
 
 		// Needed because $( selector, context ) becomes $( context ).find( selector )
-		ret = this.pushStack( len > 1 ? jQuery.unique( ret ) : ret );
+		ret = this.pushStack( len > 1 ? jQuery.unique( ret ) : ret );//unique去掉重复的dom节点
 		ret.selector = this.selector ? this.selector + " " + selector : selector;
 		return ret;
 	},
@@ -5203,11 +5210,11 @@ jQuery.fn.extend({
 		});
 	},
 
-	not: function( selector ) {
+	not: function( selector ) {//not,操作上层元素,true参数是与filter的区别
 		return this.pushStack( winnow(this, selector || [], true) );
 	},
 
-	filter: function( selector ) {
+	filter: function( selector ) {//filter是入栈炒作,操作上层元素
 		return this.pushStack( winnow(this, selector || [], false) );
 	},
 
@@ -5273,7 +5280,7 @@ jQuery.fn.extend({
 			elem.jquery ? elem[ 0 ] : elem
 		);
 	},
-
+    //添加元素到前面的集合
 	add: function( selector, context ) {
 		var set = typeof selector === "string" ?
 				jQuery( selector, context ) :
@@ -5363,21 +5370,22 @@ jQuery.each({
 });
 
 jQuery.extend({
+    //对象方法张的filter和not都是基于这个静态方法的
 	filter: function( expr, elems, not ) {
 		var elem = elems[ 0 ];
 
 		if ( not ) {
 			expr = ":not(" + expr + ")";
 		}
-
+        //返回元素数组
 		return elems.length === 1 && elem.nodeType === 1 ?
-			jQuery.find.matchesSelector( elem, expr ) ? [ elem ] : [] :
-			jQuery.find.matches( expr, jQuery.grep( elems, function( elem ) {
+			jQuery.find.matchesSelector( elem, expr ) ? [ elem ] : [] ://单个元素
+			jQuery.find.matches( expr, jQuery.grep( elems, function( elem ) {//多个元素
 				return elem.nodeType === 1;
 			}));
 	},
 
-	dir: function( elem, dir, until ) {
+	dir: function( elem, dir, until ) {//参数:操作的元素,查找类型方向,截止位置
 		var matched = [],
 			truncate = until !== undefined;
 
@@ -5423,7 +5431,7 @@ function winnow( elements, qualifier, not ) {
 	}
 
 	if ( typeof qualifier === "string" ) {
-		if ( isSimple.test( qualifier ) ) {
+		if ( isSimple.test( qualifier ) ) {//匹配.box div  #div :odd ul li等,不匹配div:odd ul #li ui[title='hello']
 			return jQuery.filter( qualifier, elements, not );
 		}
 
@@ -5467,10 +5475,10 @@ wrapMap.th = wrapMap.td;
 
 jQuery.fn.extend({
 	text: function( value ) {
-		return jQuery.access( this, function( value ) {
+		return jQuery.access( this, function( value ) {//access是统一的获取设置方法
 			return value === undefined ?
 				jQuery.text( this ) :
-				this.empty().append( ( this[ 0 ] && this[ 0 ].ownerDocument || document ).createTextNode( value ) );
+				this.empty().append( ( this[ 0 ] && this[ 0 ].ownerDocument || document ).createTextNode( value ) );//这个createIextNode不解析html
 		}, null, value, arguments.length );
 	},
 
@@ -5538,7 +5546,7 @@ jQuery.fn.extend({
 			if ( elem.nodeType === 1 ) {
 
 				// Prevent memory leaks
-				jQuery.cleanData( getAll( elem, false ) );
+				jQuery.cleanData( getAll( elem, false ) );//false不包括本身
 
 				// Remove any remaining nodes
 				elem.textContent = "";
@@ -5741,7 +5749,7 @@ jQuery.each({
 jQuery.extend({
 	clone: function( elem, dataAndEvents, deepDataAndEvents ) {
 		var i, l, srcElements, destElements,
-			clone = elem.cloneNode( true ),
+			clone = elem.cloneNode( true ),//原生不能复制事件
 			inPage = jQuery.contains( elem.ownerDocument, elem );
 
 		// Support: IE >= 9
@@ -5753,7 +5761,7 @@ jQuery.extend({
 			srcElements = getAll( elem );
 
 			for ( i = 0, l = srcElements.length; i < l; i++ ) {
-				fixInput( srcElements[ i ], destElements[ i ] );
+				fixInput( srcElements[ i ], destElements[ i ] );//修复原生的cloneNode()input的check状态不能复制的bug
 			}
 		}
 
@@ -5763,7 +5771,7 @@ jQuery.extend({
 				srcElements = srcElements || getAll( elem );
 				destElements = destElements || getAll( clone );
 
-				for ( i = 0, l = srcElements.length; i < l; i++ ) {
+				for ( i = 0, l = srcElements.length; i < l; i++ ) {//子项的克隆
 					cloneCopyEvent( srcElements[ i ], destElements[ i ] );
 				}
 			} else {
@@ -5867,7 +5875,7 @@ jQuery.extend({
 
 		return fragment;
 	},
-
+    //清楚缓存数据和事件
 	cleanData: function( elems ) {
 		var data, elem, events, type, key, j,
 			special = jQuery.event.special,
@@ -5961,6 +5969,7 @@ function cloneCopyEvent( src, dest ) {
 	}
 
 	// 1. Copy private data: events, handlers, etc.
+    //克隆事件
 	if ( data_priv.hasData( src ) ) {
 		pdataOld = data_priv.access( src );
 		pdataCur = data_priv.set( dest, pdataOld );
@@ -5979,6 +5988,7 @@ function cloneCopyEvent( src, dest ) {
 	}
 
 	// 2. Copy user data
+    //克隆数据
 	if ( data_user.hasData( src ) ) {
 		udataOld = data_user.access( src );
 		udataCur = jQuery.extend( {}, udataOld );
