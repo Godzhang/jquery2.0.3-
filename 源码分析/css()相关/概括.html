@@ -7,6 +7,7 @@
     <style>
         .test {
             color: red;
+            background: green;
         }
     </style>
 </head>
@@ -28,8 +29,12 @@
         //getComputedStyle()只能获取不能设置
         //不能获取复合样式,如backfround,但是能获取backgroundColor
         //.style可以获取复合样式
-        var color = window.getComputedStyle($('.test').get(0), null).color;
-        console.log(color);
+//        var color = window.getComputedStyle($('.test').get(0), null).color;
+//        console.log(color);
+
+        //css()不可以后去复合样式,但是可以传入样式数组,一次获取多个样式,返回的是对象
+        var style = $('.test').css(['color', 'backgroundColor']);
+        console.log(style);
     });
 </script>
 </body>

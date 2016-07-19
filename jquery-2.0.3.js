@@ -6206,7 +6206,7 @@ jQuery.fn.extend({
 				map = {},
 				i = 0;
 
-			if ( jQuery.isArray( name ) ) {
+			if ( jQuery.isArray( name ) ) {//判断数组形似的获取css(['color', 'backgroundColor'])
 				styles = getStyles( elem );
 				len = name.length;
 
@@ -6217,9 +6217,9 @@ jQuery.fn.extend({
 				return map;
 			}
 
-			return value !== undefined ?
-				jQuery.style( elem, name, value ) :
-				jQuery.css( elem, name );
+			return value !== undefined ?//value是否存在
+				jQuery.style( elem, name, value ) ://存在调用$.style的方法
+				jQuery.css( elem, name );//存在调用$.css方法
 		}, name, value, arguments.length > 1 );
 	},
 	show: function() {
@@ -6342,7 +6342,7 @@ jQuery.extend({
 
 	css: function( elem, name, extra, styles ) {
 		var val, num, hooks,
-			origName = jQuery.camelCase( name );
+			origName = jQuery.camelCase( name );//转驼峰
 
 		// Make sure that we're working with the right name
 		name = jQuery.cssProps[ origName ] || ( jQuery.cssProps[ origName ] = vendorPropName( elem.style, origName ) );
